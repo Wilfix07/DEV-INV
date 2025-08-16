@@ -1,183 +1,267 @@
 # DEB Cargo Shipping LLC - Sales Management System
 
-A comprehensive, responsive web application for managing sales, expenses, and reporting for DEB Cargo Shipping LLC. Built with vanilla JavaScript and Supabase backend.
+A comprehensive, responsive web application for managing sales, expenses, and reporting for DEB Cargo Shipping LLC. Built with React, TypeScript, Tailwind CSS, and Supabase.
 
-## Features
+## 🌟 Features
 
-✅ **Multilingual Support** - English, French, and Haitian Creole
-✅ **Role-Based Access Control** - Admin, Manager, Chief Teller, Teller
-✅ **Sales Management** - Manual entry and QR/barcode scanning
-✅ **Expense Tracking** - Categorized expense management
-✅ **Real-time Reporting** - Daily sales and expense reports
-✅ **Mobile Responsive** - Optimized for mobile devices
-✅ **Currency Support** - HTG and USD with conversion
-✅ **Modern UI** - Minimalist design with brand colors
+### 🛍️ Sales Management
+- **Manual Sales Entry**: Create sales records manually with product selection
+- **QR Code Scanning**: Scan product QR codes to quickly register sales
+- **Barcode Scanning**: Support for barcode scanning functionality
+- **Real-time Tracking**: Monitor sales as they happen
 
-## Technology Stack
+### 👥 User Role Management
+- **Admin**: Full access to all features and data
+- **Manager**: Access to sales, expenses, reports, and products (cannot manage users)
+- **Chief Teller**: Access to sales, reports, and dashboard (cannot manage expenses or users)
+- **Teller**: Access to sales and dashboard only (cannot view reports or manage data)
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Backend**: Supabase (PostgreSQL, Authentication, Real-time)
-- **Scanning**: HTML5 QR Code Scanner
-- **Styling**: Custom CSS with CSS Variables
-- **Authentication**: Supabase Auth with RLS
+### 📊 Daily Sales Reports
+- **Dual Currency Support**: Haitian Gourdes (HTG) and US Dollars (USD)
+- **Comprehensive Analytics**: Total sales, expenses, transactions, and product summaries
+- **Date Filtering**: Filter reports by specific dates
+- **Export Functionality**: Download reports in JSON format
 
-## Quick Start
+### 💰 Expense Management
+- **Expense Registration**: Record business expenses with categories
+- **Categorized Tracking**: Organize expenses by type (Office Supplies, Transportation, etc.)
+- **Dual Currency**: Track expenses in both HTG and USD
 
-### 1. Clone/Download Files
+### 🌍 Multilingual Support
+- **English**: Primary language
+- **French**: Complete French translation
+- **Haitian Creole**: Full Haitian Creole support
+- **Dynamic Switching**: Change language on-the-fly
+
+### 🎨 Branding & Design
+- **DEB Cargo Brand Colors**: Red, Yellow, and Blue theme
+- **Responsive Design**: Optimized for mobile and desktop
+- **Modern UI**: Clean, minimalist interface with excellent UX
+
+## 🚀 Technology Stack
+
+- **Frontend**: React 18 + TypeScript
+- **Styling**: Tailwind CSS
+- **Backend**: Supabase (PostgreSQL + Auth + Real-time)
+- **Routing**: React Router DOM
+- **Forms**: React Hook Form
+- **Notifications**: React Hot Toast
+- **Icons**: Lucide React
+- **Build Tool**: Vite
+- **QR/Barcode Scanning**: HTML5 QR Code Scanner
+
+## 📋 Prerequisites
+
+- Node.js 16+ 
+- npm or yarn
+- Supabase account and project
+
+## 🛠️ Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd deb-cargo-shipping
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set up Supabase**
+   - Create a new Supabase project at [supabase.com](https://supabase.com)
+   - Go to Settings > API to get your project URL and anon key
+   - Copy `env.example` to `.env.local` and fill in your Supabase credentials
+
+4. **Set up the database**
+   - Go to your Supabase project's SQL Editor
+   - Run the contents of `supabase/schema.sql` to create all tables and policies
+
+5. **Start the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+6. **Open your browser**
+   Navigate to `http://localhost:3000`
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key-here
+```
+
+### Supabase Setup
+
+1. **Enable Row Level Security (RLS)** - Already configured in schema
+2. **Set up Authentication** - Email/password auth is enabled by default
+3. **Configure Storage** - For future file upload features
+
+## 📱 Usage
+
+### First Time Setup
+
+1. **Login with default admin account**:
+   - Email: `admin@deb-cargo.com`
+   - Password: Check your Supabase auth settings or create a new admin user
+
+2. **Create Products**:
+   - Navigate to Products section
+   - Add your inventory items with prices in both currencies
+   - Generate QR codes and barcodes for scanning
+
+3. **Set up Users**:
+   - Create user accounts for your team members
+   - Assign appropriate roles based on their responsibilities
+
+### Daily Operations
+
+1. **Record Sales**:
+   - Use QR code scanning for quick product identification
+   - Or manually select products and enter quantities
+   - Sales are automatically tracked with timestamps
+
+2. **Track Expenses**:
+   - Record business expenses with descriptions and categories
+   - Monitor spending patterns
+
+3. **Generate Reports**:
+   - View daily sales summaries
+   - Export data for accounting purposes
+   - Analyze product performance
+
+## 🗄️ Database Schema
+
+### Tables
+
+- **users**: User accounts and roles
+- **products**: Product inventory with pricing
+- **sales**: Sales transactions
+- **expenses**: Business expenses
+
+### Key Features
+
+- **Row Level Security**: Data access controlled by user roles
+- **Referential Integrity**: Foreign key constraints ensure data consistency
+- **Audit Trail**: Created/updated timestamps on all records
+- **Indexing**: Optimized queries for better performance
+
+## 🔒 Security Features
+
+- **Authentication**: Supabase Auth with email/password
+- **Authorization**: Role-based access control (RBAC)
+- **Data Protection**: Row Level Security (RLS) policies
+- **Input Validation**: Form validation and sanitization
+- **HTTPS**: Secure communication (in production)
+
+## 📱 Mobile Optimization
+
+- **Responsive Design**: Works seamlessly on all device sizes
+- **Touch-Friendly**: Optimized for mobile interactions
+- **Offline Capable**: Basic functionality works without internet
+- **PWA Ready**: Can be installed as a mobile app
+
+## 🚀 Deployment
+
+### Build for Production
+
 ```bash
-# Download all project files to your web server
-- index.html
-- styles.css
-- app.js
-- translations.js
-- supabase-config.js
-- database_setup.sql
-- logo-placeholder.svg
+npm run build
+# or
+yarn build
 ```
 
-### 2. Set Up Supabase
+### Deploy Options
 
-1. Create account at [supabase.com](https://supabase.com)
-2. Create new project
-3. Go to SQL Editor and run `database_setup.sql`
-4. Get your Project URL and API Key from Settings > API
-5. Update `supabase-config.js` with your credentials
+1. **Vercel** (Recommended)
+   ```bash
+   npm install -g vercel
+   vercel
+   ```
 
-### 3. Configure Application
+2. **Netlify**
+   - Connect your GitHub repository
+   - Set build command: `npm run build`
+   - Set publish directory: `dist`
 
-1. Replace placeholder logo with your company logo
-2. Update exchange rate in `supabase-config.js` if needed
-3. Upload files to your web server (HTTPS required for scanner)
+3. **Supabase Edge Functions**
+   - Deploy as a Supabase Edge Function
+   - Perfect for serverless architecture
 
-### 4. Create First User
+## 🧪 Testing
 
-1. Access the application URL
-2. Register first admin user
-3. Add products and other users as needed
+```bash
+# Run tests
+npm run test
 
-## File Structure
+# Run tests in watch mode
+npm run test:watch
 
-```
-project/
-├── index.html              # Main application file
-├── styles.css              # All styling and responsive design
-├── app.js                  # Main application logic
-├── translations.js         # Multi-language support
-├── supabase-config.js      # Database configuration
-├── database_setup.sql      # Database schema and setup
-├── logo-placeholder.svg    # Default logo (replace with yours)
-├── SETUP.md               # Detailed setup instructions
-└── README.md              # This file
+# Run tests with coverage
+npm run test:coverage
 ```
 
-## User Roles & Permissions
+## 📈 Performance
 
-| Feature | Admin | Manager | Chief Teller | Teller |
-|---------|-------|---------|--------------|--------|
-| Sales Entry | ✅ | ✅ | ✅ | ✅ |
-| View Sales | ✅ | ✅ | ✅ | ✅ |
-| Expense Entry | ✅ | ✅ | ✅ | ❌ |
-| View Expenses | ✅ | ✅ | Own Only | ❌ |
-| Reports | ✅ | ✅ | ✅ | Basic |
-| Product Management | ✅ | ✅ | ❌ | ❌ |
-| User Management | ✅ | ❌ | ❌ | ❌ |
+- **Code Splitting**: Automatic route-based code splitting
+- **Lazy Loading**: Components load on demand
+- **Optimized Bundles**: Vite for fast builds and HMR
+- **Database Indexing**: Optimized queries with proper indexes
 
-## Key Features Detail
-
-### Sales Management
-- Manual product selection and entry
-- QR code and barcode scanning support
-- Real-time total calculation
-- Multi-currency support (HTG/USD)
-- Transaction history
-
-### Expense Management
-- Categorized expenses (Fuel, Maintenance, Office, Utilities, Other)
-- Date-based tracking
-- Multi-currency support
-- Role-based access control
-
-### Reporting
-- Daily sales summaries
-- Expense breakdowns
-- Date range filtering
-- Currency-specific totals
-- Product-wise sales reports
-
-### Mobile Optimization
-- Responsive design for all screen sizes
-- Touch-friendly interface
-- Optimized navigation for mobile
-- Fast loading on slower connections
-
-## Configuration
-
-### Brand Colors
-The application uses your brand colors (Red, Yellow, Blue):
-- Primary Red: `#DC2626`
-- Primary Yellow: `#FCD34D`
-- Primary Blue: `#2563EB`
-
-### Exchange Rate
-Update the HTG to USD conversion rate in `supabase-config.js`:
-```javascript
-const HTG_TO_USD_RATE = 0.0075; // Update this value
-```
-
-### Language Settings
-Default language is English. Users can switch languages from the menu. Available languages:
-- English (en)
-- French (fr)
-- Haitian Creole (ht)
-
-## Security Features
-
-- Row Level Security (RLS) on all database tables
-- Role-based access control
-- Secure authentication via Supabase
-- Input validation and sanitization
-- HTTPS enforcement for production
-
-## Browser Support
-
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## Requirements
-
-- Modern web browser with JavaScript enabled
-- HTTPS connection (for QR scanner)
-- Internet connection
-- Supabase account
-
-## Support & Maintenance
+## 🔄 Updates & Maintenance
 
 ### Regular Tasks
-- Update exchange rates
-- Review user roles
-- Monitor database usage
-- Check for errors in browser console
 
-### Troubleshooting
-- Check `SETUP.md` for detailed troubleshooting guide
-- Verify Supabase project status
-- Ensure HTTPS is enabled
-- Check browser console for errors
+1. **Database Backups**: Supabase handles this automatically
+2. **Security Updates**: Keep dependencies updated
+3. **Performance Monitoring**: Monitor query performance
+4. **User Training**: Regular training for new features
 
-## License
+### Backup & Recovery
+
+- **Automatic Backups**: Supabase provides daily backups
+- **Point-in-Time Recovery**: Available in Supabase Pro plans
+- **Export Data**: Use the export functionality for manual backups
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
 
 This project is proprietary software for DEB Cargo Shipping LLC.
 
-## Contact
+## 🆘 Support
 
-For technical support or questions about this application, contact your system administrator.
+For technical support or questions:
+- Check the documentation
+- Review the code comments
+- Contact the development team
+
+## 🔮 Future Enhancements
+
+- **Inventory Management**: Stock tracking and alerts
+- **Customer Management**: Customer database and history
+- **Advanced Analytics**: Charts and trend analysis
+- **Mobile App**: Native mobile applications
+- **API Integration**: Connect with accounting software
+- **Multi-location Support**: Multiple store locations
 
 ---
 
-**Version**: 1.0.0  
-**Last Updated**: January 2025  
-**Developed for**: DEB Cargo Shipping LLC
+**DEB Cargo Shipping LLC** - Streamlining your shipping operations with modern technology.
 
