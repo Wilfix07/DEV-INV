@@ -111,7 +111,32 @@ Ensure you have the following installed:
    - Set `role` to `admin`
    - Set `full_name` to your name
 
-### Step 7: Test the Application
+### Step 7: Set Up Sample Users (Optional)
+
+If you want to test the application with pre-configured users, you can set up sample users in Supabase Auth:
+
+1. **Go to your Supabase Dashboard** → Authentication → Users
+2. **Click "Add User"** and create these sample users:
+   - **Admin:** admin@deb-cargo.com / password123
+   - **Manager:** manager@deb-cargo.com / password123
+   - **Chief Teller:** chief@deb-cargo.com / password123
+   - **Teller:** teller@deb-cargo.com / password123
+
+3. **Link the auth users to profiles** by running this SQL in your Supabase SQL editor:
+   ```sql
+   -- Replace 'actual-auth-user-id' with the real auth user ID from step 2
+   UPDATE public.users SET id = 'actual-auth-user-id' WHERE email = 'admin@deb-cargo.com';
+   ```
+
+**Alternative:** You can also delete the sample profiles and let new users sign up:
+```sql
+DELETE FROM public.users WHERE email IN (
+  'admin@deb-cargo.com', 'manager@deb-cargo.com', 
+  'chief@deb-cargo.com', 'teller@deb-cargo.com'
+);
+```
+
+### Step 8: Test the Application
 
 1. **Start development server**
    ```bash
@@ -124,7 +149,7 @@ Ensure you have the following installed:
 
 3. **Login**
    - Email: `admin@deb-cargo.com`
-   - Password: `admin123`
+   - Password: `password123` (or the password you set when creating the auth user)
 
 4. **Verify functionality**
    - Dashboard should load

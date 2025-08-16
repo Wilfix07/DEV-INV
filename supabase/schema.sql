@@ -161,6 +161,8 @@ CREATE TRIGGER update_products_updated_at BEFORE UPDATE ON public.products
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- Insert sample data for testing
+-- Note: These are sample user profiles. You need to create auth users separately in Supabase Auth
+-- Sample passwords for testing: password123
 INSERT INTO public.users (id, email, full_name, role) VALUES
     ('00000000-0000-0000-0000-000000000001', 'admin@deb-cargo.com', 'System Administrator', 'admin'),
     ('00000000-0000-0000-0000-000000000002', 'manager@deb-cargo.com', 'Store Manager', 'manager'),

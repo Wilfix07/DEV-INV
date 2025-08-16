@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
@@ -12,6 +13,7 @@ interface LoginForm {
 
 const Login = () => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   
@@ -134,6 +136,29 @@ const Login = () => {
                 t('login')
               )}
             </button>
+          </div>
+
+          <div className="text-center space-y-2">
+            <p className="text-sm text-white/80">
+              Don't have an account?{' '}
+              <button
+                type="button"
+                onClick={() => navigate('/signup')}
+                className="font-medium text-white hover:text-deb-yellow transition-colors"
+              >
+                Sign up
+              </button>
+            </p>
+            
+            <div className="text-xs text-white/60 bg-white/10 p-3 rounded-lg">
+              <p className="font-medium mb-2">Sample Users (for testing):</p>
+              <div className="space-y-1 text-left">
+                <p><strong>Admin:</strong> admin@deb-cargo.com / password123</p>
+                <p><strong>Manager:</strong> manager@deb-cargo.com / password123</p>
+                <p><strong>Chief Teller:</strong> chief@deb-cargo.com / password123</p>
+                <p><strong>Teller:</strong> teller@deb-cargo.com / password123</p>
+              </div>
+            </div>
           </div>
         </form>
       </div>
