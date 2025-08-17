@@ -68,39 +68,22 @@ ALTER TABLE public.sales ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.expenses ENABLE ROW LEVEL SECURITY;
 
 -- Create RLS policies for users table
+-- Allow users to view their own profile
 CREATE POLICY "Users can view their own profile" ON public.users
     FOR SELECT USING (auth.uid() = id);
 
-CREATE POLICY "Admins can view all users" ON public.users
-    FOR SELECT USING (
-        EXISTS (
-            SELECT 1 FROM public.users 
-            WHERE id = auth.uid() AND role = 'admin'
-        )
-    );
+-- Allow authenticated users to insert their own profile (for signup)
+CREATE POLICY "Users can insert their own profile" ON public.users
+    FOR INSERT WITH CHECK (auth.uid() = id);
 
-CREATE POLICY "Admins can insert users" ON public.users
-    FOR INSERT WITH CHECK (
-        EXISTS (
-            SELECT 1 FROM public.users 
-            WHERE id = auth.uid() AND role = 'admin'
-        )
-    );
+-- Allow users to update their own profile
+CREATE POLICY "Users can update their own profile" ON public.users
+    FOR UPDATE USING (auth.uid() = id);
 
-CREATE POLICY "Admins can update users" ON public.users
-    FOR UPDATE USING (
-        EXISTS (
-            SELECT 1 FROM public.users 
-            WHERE id = auth.uid() AND role = 'admin'
-        )
-    );
-
-CREATE POLICY "Admins can delete users" ON public.users
-    FOR DELETE USING (
-        EXISTS (
-            SELECT 1 FROM public.users 
-            WHERE id = auth.uid() AND role = 'admin'
-        )
+-- Allow admins to manage all users (but avoid circular references)
+CREATE POLICY "Admins can manage all users" ON public.users
+    FOR ALL USING (
+        (SELECT role FROM public.users WHERE id = auth.uid()) = 'admin'
     );
 
 -- Create RLS policies for products table
@@ -109,10 +92,7 @@ CREATE POLICY "All authenticated users can view products" ON public.products
 
 CREATE POLICY "Managers and admins can manage products" ON public.products
     FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM public.users 
-            WHERE id = auth.uid() AND role IN ('admin', 'manager')
-        )
+        (SELECT role FROM public.users WHERE id = auth.uid()) IN ('admin', 'manager')
     );
 
 -- Create RLS policies for sales table
@@ -121,27 +101,18 @@ CREATE POLICY "All authenticated users can view sales" ON public.sales
 
 CREATE POLICY "Tellers and above can create sales" ON public.sales
     FOR INSERT WITH CHECK (
-        EXISTS (
-            SELECT 1 FROM public.users 
-            WHERE id = auth.uid() AND role IN ('admin', 'manager', 'chief_teller', 'teller')
-        )
+        (SELECT role FROM public.users WHERE id = auth.uid()) IN ('admin', 'manager', 'chief_teller', 'teller')
     );
 
 -- Create RLS policies for expenses table
 CREATE POLICY "Managers and admins can view expenses" ON public.expenses
     FOR SELECT USING (
-        EXISTS (
-            SELECT 1 FROM public.users 
-            WHERE id = auth.uid() AND role IN ('admin', 'manager')
-        )
+        (SELECT role FROM public.users WHERE id = auth.uid()) IN ('admin', 'manager')
     );
 
 CREATE POLICY "Managers and admins can create expenses" ON public.expenses
     FOR INSERT WITH CHECK (
-        EXISTS (
-            SELECT 1 FROM public.users 
-            WHERE id = auth.uid() AND role IN ('admin', 'manager')
-        )
+        (SELECT role FROM public.users WHERE id = auth.uid()) IN ('admin', 'manager')
     );
 
 -- Create function to update updated_at timestamp

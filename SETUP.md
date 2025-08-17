@@ -87,7 +87,11 @@ Ensure you have the following installed:
    - Paste it into the SQL Editor
    - Click **Run** button
 
-3. **Verify tables created**
+3. **Fix RLS Policies (if needed)**
+   - If you encounter "infinite recursion" errors, run the fix script:
+   - Copy and execute `supabase/fix-rls-policies.sql` in the SQL Editor
+
+4. **Verify tables created**
    - Go to **Table Editor** in the left sidebar
    - You should see: `users`, `products`, `sales`, `expenses`
 
@@ -207,6 +211,11 @@ DELETE FROM public.users WHERE email IN (
    - Verify user exists in Supabase Auth
    - Check user role in users table
    - Ensure RLS policies are correct
+
+4. **"Infinite recursion detected in policy" errors**
+   - This is caused by circular references in RLS policies
+   - Run the fix script: `supabase/fix-rls-policies.sql`
+   - Or manually drop and recreate the policies
 
 4. **QR Scanner not working**
    - Ensure HTTPS connection (required for camera access)
